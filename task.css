@@ -1,0 +1,43 @@
+.section-one{
+    background-color: black;
+    color: rgb(255, 255, 255);
+    padding: 30px;
+}
+.section-one__title{
+    color: rgb(241, 33, 241);
+    font-size: 64px;
+}
+*{
+    font-family: "Roboto Condensed", serif;
+}
+.section-one button{
+    width: 60px;
+    height: 40px;
+    border: solid 2px rgb(241, 33, 241);
+    background-color: black;
+    color: rgb(241, 33, 241);
+    margin-left: 120px;
+}
+.section-one button:hover{
+    background-color: rgb(241, 33, 241);
+    color: black;
+}
+.section-one img{
+    width: 25%;
+    height: 25%;
+}
+.section-one__img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.section-one__desc{
+    font-size: 48px;
+    margin-top: -30px;
+}
