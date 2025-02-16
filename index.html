@@ -8,7 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap');
         body {
             font-family: 'Rajdhani', sans-serif;
-            background: radial-gradient(circle, #000428, #004e92);
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: #ffffff;
             text-align: center;
             padding: 50px;
@@ -18,10 +18,10 @@
         .container {
             max-width: 800px;
             margin: auto;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.85);
             padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.8);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
             animation: fadeIn 1s ease-in-out;
         }
         @keyframes fadeIn {
@@ -37,38 +37,26 @@
             text-shadow: 0px 0px 20px rgba(0, 255, 255, 0.7);
         }
         p {
-            font-size: 22px;
+            font-size: 20px;
             margin-bottom: 20px;
             text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
         }
         button {
-            padding: 18px 40px;
-            font-size: 24px;
+            padding: 15px 35px;
+            font-size: 22px;
             font-weight: bold;
             color: #fff;
             background: linear-gradient(90deg, #00f2ff, #0072ff);
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.5);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
             position: relative;
-            overflow: hidden;
         }
         button:hover {
-            background: linear-gradient(90deg, #0072ff, #00f2ff);
             transform: scale(1.1);
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 26px;
-            font-weight: bold;
-            background: rgba(15, 52, 96, 0.9);
-            padding: 25px;
-            border-radius: 12px;
-            display: inline-block;
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
-            white-space: pre-line;
+            box-shadow: 0 4px 30px rgba(0, 255, 255, 0.6);
         }
         .progress {
             width: 100%;
@@ -76,7 +64,7 @@
             border-radius: 12px;
             overflow: hidden;
             margin-top: 20px;
-            height: 30px;
+            height: 25px;
             position: relative;
         }
         .progress-bar {
@@ -85,25 +73,12 @@
             background: linear-gradient(90deg, #00f2ff, #0072ff);
             transition: width 2s ease-in-out;
         }
-        .loading {
-            display: none;
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 15px;
-            animation: pulse 1.5s infinite;
-            color: #00f2ff;
-        }
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
         .loading-animation {
             display: none;
             margin: 20px auto;
-            width: 80px;
-            height: 80px;
-            border: 8px solid rgba(0, 255, 255, 0.2);
+            width: 70px;
+            height: 70px;
+            border: 6px solid rgba(0, 255, 255, 0.2);
             border-radius: 50%;
             border-top-color: #00f2ff;
             animation: spin 1s linear infinite;
@@ -112,11 +87,24 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .loading-text {
+            display: none;
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #00f2ff;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
     </style>
     <script>
         function runBenchmark() {
-            document.getElementById('loading').style.display = 'block';
             document.querySelector('.loading-animation').style.display = 'block';
+            document.querySelector('.loading-text').style.display = 'block';
             document.getElementById('progressBar').style.width = '0%';
             
             let progress = 0;
@@ -126,8 +114,8 @@
                 if (progress >= 100) {
                     clearInterval(interval);
                     setTimeout(() => {
-                        document.getElementById('loading').style.display = 'none';
                         document.querySelector('.loading-animation').style.display = 'none';
+                        document.querySelector('.loading-text').style.display = 'none';
                         document.getElementById('result').innerText = '✅ Benchmark Complete!\nCPU Score: ' + Math.floor(Math.random() * 10000);
                     }, 500);
                 }
@@ -142,7 +130,7 @@
         <button onclick="runBenchmark()">Start Benchmark</button>
         <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
         <div class="loading-animation"></div>
-        <p class="loading" id="loading">⚡ Running benchmark...</p>
+        <p class="loading-text">⚡ Running benchmark...</p>
         <p id="result">Waiting for test...</p>
     </div>
 </body>
