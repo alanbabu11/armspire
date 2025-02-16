@@ -77,29 +77,43 @@
             background: linear-gradient(90deg, #ff8c00, #ff2e63);
             transition: width 2s ease-in-out;
         }
+        .loading {
+            display: none;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .loading span {
+            display: inline-block;
+            animation: dots 1.5s infinite;
+        }
+        @keyframes dots {
+            0% { content: '.'; }
+            33% { content: '..'; }
+            66% { content: '...'; }
+        }
     </style>
     <script>
-        function runBenchmark() {
-            document.getElementById("result").innerText = "Running benchmark...";
+        async function loadWasm() {
+            const wasm = await WebAssembly.instantiateStreaming(fetch("benchmark.wasm"));
+            return wasm.instance.exports;
+        }
+
+        async function runBenchmark() {
+            document.getElementById("result").innerText = "";
+            document.getElementById("loading").style.display = "block";
             let progressBar = document.getElementById("progressBar");
             progressBar.style.width = "0%";
 
-            let worker = new Worker(URL.createObjectURL(new Blob([`
-                onmessage = function(e) {
-                    let start = performance.now();
-                    let sum = 0;
-                    for (let i = 0; i < 1000000000; i++) { sum += Math.sin(i) * Math.sqrt(i) * Math.log(i + 1); }
-                    let end = performance.now();
-                    let score = Math.round(50000000 / (end - start));
-                    postMessage(score);
-                }
-            `], { type: 'application/javascript' })));
-
-            worker.onmessage = function(e) {
-                progressBar.style.width = "100%";
-                document.getElementById("result").innerText = `🔥 Benchmark Score: ${e.data} pts`;
-            };
-            worker.postMessage("start");
+            const wasm = await loadWasm();
+            let start = performance.now();
+            let score = wasm.run_benchmark();
+            let end = performance.now();
+            let timeTaken = (end - start).toFixed(2);
+            
+            progressBar.style.width = "100%";
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("result").innerText = `🔥 Benchmark Score: ${score} pts\n⏱ Time Taken: ${timeTaken} ms`;
         }
     </script>
 </head>
@@ -109,6 +123,7 @@
         <p>Test your CPU's real-world performance with an advanced benchmarking algorithm.</p>
         <button onclick="runBenchmark()">Start Benchmark</button>
         <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+        <p class="loading" id="loading">Running benchmark<span>.</span></p>
         <p id="result">Waiting for test...</p>
     </div>
 </body>
