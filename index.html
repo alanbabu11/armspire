@@ -102,7 +102,7 @@
                 for (let i = 0; i < 1000000000; i++) { sum += Math.sin(i) * Math.sqrt(i) * Math.log(i + 1); } 
                 let end = performance.now();
                 let score = Math.round(50000000 / (end - start));
-                document.getElementById("result").innerText = 🔥 Benchmark Score: ${score} pts (Time Taken: ${(end - start).toFixed(2)} ms);
+                document.getElementById("result").innerText = `🔥 Benchmark Score: ${score} pts (Time Taken: ${(end - start).toFixed(2)} ms)`;
             }, 1000);
         }
     </script>
