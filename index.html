@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ultimate CPU Benchmark</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(circle, #1a1a2e, #16213e);
             color: #ffffff;
             text-align: center;
             padding: 50px;
@@ -17,10 +18,10 @@
         .container {
             max-width: 800px;
             margin: auto;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
             animation: fadeIn 1s ease-in-out;
         }
         @keyframes fadeIn {
@@ -28,9 +29,9 @@
             to { opacity: 1; transform: scale(1); }
         }
         h1 {
-            font-size: 32px;
+            font-size: 36px;
             text-transform: uppercase;
-            background: -webkit-linear-gradient(90deg, #ff8c00, #ff2e63);
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -43,25 +44,25 @@
             font-size: 20px;
             font-weight: bold;
             color: #fff;
-            background: linear-gradient(90deg, #ff8c00, #ff2e63);
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
             border: none;
             border-radius: 10px;
             cursor: pointer;
             transition: 0.3s;
         }
         button:hover {
-            background: linear-gradient(90deg, #ff2e63, #ff8c00);
+            background: linear-gradient(90deg, #0072ff, #00c6ff);
             transform: scale(1.1);
         }
         #result {
             margin-top: 20px;
             font-size: 24px;
             font-weight: bold;
-            background: #21262d;
+            background: #0f3460;
             padding: 15px;
             border-radius: 10px;
             display: inline-block;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
             white-space: pre-line;
         }
         .progress {
@@ -75,7 +76,7 @@
         .progress-bar {
             width: 0;
             height: 100%;
-            background: linear-gradient(90deg, #ff8c00, #ff2e63);
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
             transition: width 2s ease-in-out;
         }
         .loading {
@@ -97,7 +98,7 @@
             height: 50px;
             border: 5px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top-color: #ff2e63;
+            border-top-color: #00c6ff;
             animation: spin 1s linear infinite;
         }
         @keyframes spin {
@@ -123,6 +124,8 @@
             let integerScore = wasm.integer_benchmark();
             let floatScore = wasm.float_benchmark();
             let memoryScore = wasm.memory_benchmark();
+            let encryptionScore = wasm.encryption_benchmark();
+            let compressionScore = wasm.compression_benchmark();
             let end = performance.now();
             let timeTaken = (end - start).toFixed(2);
             
@@ -133,6 +136,8 @@
                 `🔢 Integer Operations: ${integerScore} pts\n` +
                 `📊 Floating-Point Ops: ${floatScore} pts\n` +
                 `💾 Memory Performance: ${memoryScore} pts\n` +
+                `🔐 Encryption Speed: ${encryptionScore} pts\n` +
+                `📦 Compression Efficiency: ${compressionScore} pts\n` +
                 `⏱ Time Taken: ${timeTaken} ms\n` +
                 `🖥 CPU: ${navigator.hardwareConcurrency} Cores`;
         }
@@ -140,8 +145,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>🚀 Ultimate CPU Benchmark</h1>
-        <p>Test your CPU's real-world performance with an advanced benchmarking algorithm.</p>
+        <h1>🚀 Ultra Benchmark Pro</h1>
+        <p>Test your CPU's real-world performance with next-gen benchmarking technology.</p>
         <button onclick="runBenchmark()">Start Benchmark</button>
         <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
         <div class="spinner" id="spinner"></div>
