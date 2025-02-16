@@ -83,7 +83,7 @@
             width: 0;
             height: 100%;
             background: linear-gradient(90deg, #00f2ff, #0072ff);
-            transition: width 2s ease-in-out;
+            transition: width 5s ease-in-out;
         }
         .loading {
             display: none;
@@ -115,21 +115,13 @@
             document.getElementById("result").textContent = "Running test...";
             document.getElementById("progressBar").style.width = "100%";
             
-            let startTime = performance.now();
-            let totalOperations = 0;
-            while (performance.now() - startTime < 5000) {
-                for (let i = 0; i < 1e6; i++) {
-                    Math.sqrt(i) * Math.log(i + 1);
-                }
-                totalOperations += 1e6;
-            }
-            let endTime = performance.now();
-            let elapsedTime = (endTime - startTime).toFixed(2);
-            let operationsPerMs = (totalOperations / elapsedTime).toFixed(2);
-            
-            document.getElementById("loading").style.display = "none";
-            document.getElementById("progressBar").style.width = "0%";
-            document.getElementById("result").textContent = `✅ Benchmark Completed!\nExecution Time: ${elapsedTime} ms\nOperations/ms: ${operationsPerMs}`;
+            const worker = new Worker("worker.js");
+            worker.onmessage = function(event) {
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("progressBar").style.width = "0%";
+                document.getElementById("result").textContent = `✅ Benchmark Completed!\nExecution Time: ${event.data.time} ms\nOperations/ms: ${event.data.ops}`;
+            };
+            worker.postMessage({ iterations: 10000000 });
         }
     </script>
 </body>
