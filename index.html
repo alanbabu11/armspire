@@ -108,7 +108,7 @@
     </style>
     <script>
         async function loadWasm() {
-            const wasm = await WebAssembly.instantiateStreaming(fetch("benchmark.wasm"));
+            const wasm = await WebAssembly.instantiateStreaming(fetch("benchmark_advanced.wasm"));
             return wasm.instance.exports;
         }
         
@@ -126,6 +126,8 @@
             let memoryScore = wasm.memory_benchmark();
             let encryptionScore = wasm.encryption_benchmark();
             let compressionScore = wasm.compression_benchmark();
+            let multiThreadScore = wasm.multi_thread_benchmark();
+            let realWorldScore = wasm.real_world_benchmark();
             let end = performance.now();
             let timeTaken = (end - start).toFixed(2);
             
@@ -138,6 +140,8 @@
                 `💾 Memory Performance: ${memoryScore} pts\n` +
                 `🔐 Encryption Speed: ${encryptionScore} pts\n` +
                 `📦 Compression Efficiency: ${compressionScore} pts\n` +
+                `🧵 Multi-Thread Performance: ${multiThreadScore} pts\n` +
+                `🎮 Real-World Simulation: ${realWorldScore} pts\n` +
                 `⏱ Time Taken: ${timeTaken} ms\n` +
                 `🖥 CPU: ${navigator.hardwareConcurrency} Cores`;
         }
@@ -145,8 +149,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>🚀 Ultra Benchmark Pro</h1>
-        <p>Test your CPU's real-world performance with next-gen benchmarking technology.</p>
+        <h1>🚀 Ultra Benchmark Pro X</h1>
+        <p>Next-gen benchmarking that surpasses industry standards.</p>
         <button onclick="runBenchmark()">Start Benchmark</button>
         <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
         <div class="spinner" id="spinner"></div>
