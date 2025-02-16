@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ultimate CPU Benchmark</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap');
         body {
-            font-family: 'Orbitron', sans-serif;
-            background: radial-gradient(circle, #1a1a2e, #16213e);
+            font-family: 'Rajdhani', sans-serif;
+            background: radial-gradient(circle, #000428, #004e92);
             color: #ffffff;
             text-align: center;
             padding: 50px;
@@ -18,10 +18,10 @@
         .container {
             max-width: 800px;
             margin: auto;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.8);
             animation: fadeIn 1s ease-in-out;
         }
         @keyframes fadeIn {
@@ -29,132 +29,112 @@
             to { opacity: 1; transform: scale(1); }
         }
         h1 {
-            font-size: 36px;
+            font-size: 50px;
             text-transform: uppercase;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            background: linear-gradient(90deg, #00f2ff, #0072ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0px 0px 20px rgba(0, 255, 255, 0.7);
         }
         p {
-            font-size: 18px;
+            font-size: 22px;
             margin-bottom: 20px;
+            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
         }
         button {
-            padding: 15px 35px;
-            font-size: 20px;
+            padding: 18px 40px;
+            font-size: 24px;
             font-weight: bold;
             color: #fff;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            background: linear-gradient(90deg, #00f2ff, #0072ff);
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             cursor: pointer;
             transition: 0.3s;
+            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        button::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: rgba(255, 255, 255, 0.1);
+            filter: blur(10px);
+            z-index: -1;
         }
         button:hover {
-            background: linear-gradient(90deg, #0072ff, #00c6ff);
+            background: linear-gradient(90deg, #0072ff, #00f2ff);
             transform: scale(1.1);
         }
         #result {
             margin-top: 20px;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
-            background: #0f3460;
-            padding: 15px;
-            border-radius: 10px;
+            background: rgba(15, 52, 96, 0.9);
+            padding: 25px;
+            border-radius: 12px;
             display: inline-block;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
             white-space: pre-line;
         }
         .progress {
             width: 100%;
-            background: #30363d;
-            border-radius: 10px;
+            background: rgba(48, 54, 61, 0.8);
+            border-radius: 12px;
             overflow: hidden;
             margin-top: 20px;
-            height: 25px;
+            height: 30px;
+            position: relative;
         }
         .progress-bar {
             width: 0;
             height: 100%;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            background: linear-gradient(90deg, #00f2ff, #0072ff);
             transition: width 2s ease-in-out;
         }
         .loading {
             display: none;
-            font-size: 18px;
+            font-size: 24px;
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 15px;
             animation: pulse 1.5s infinite;
+            color: #00f2ff;
         }
         @keyframes pulse {
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
-        .spinner {
-            display: none;
-            margin: 20px auto;
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #00c6ff;
-            animation: spin 1s linear infinite;
+        .glow-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.8), rgba(0, 255, 255, 0) 70%);
+            filter: blur(100px);
+            transform: translate(-50%, -50%) rotate(360deg);
+            pointer-events: none;
+            animation: glowRotate 10s linear infinite;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes glowRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
     </style>
-    <script>
-        async function loadWasm() {
-            const wasm = await WebAssembly.instantiateStreaming(fetch("benchmark_advanced.wasm"));
-            return wasm.instance.exports;
-        }
-        
-        async function runBenchmark() {
-            document.getElementById("result").innerText = "";
-            document.getElementById("loading").style.display = "block";
-            document.getElementById("spinner").style.display = "block";
-            let progressBar = document.getElementById("progressBar");
-            progressBar.style.width = "0%";
-
-            const wasm = await loadWasm();
-            let start = performance.now();
-            let integerScore = wasm.integer_benchmark();
-            let floatScore = wasm.float_benchmark();
-            let memoryScore = wasm.memory_benchmark();
-            let encryptionScore = wasm.encryption_benchmark();
-            let compressionScore = wasm.compression_benchmark();
-            let multiThreadScore = wasm.multi_thread_benchmark();
-            let realWorldScore = wasm.real_world_benchmark();
-            let end = performance.now();
-            let timeTaken = (end - start).toFixed(2);
-            
-            progressBar.style.width = "100%";
-            document.getElementById("loading").style.display = "none";
-            document.getElementById("spinner").style.display = "none";
-            document.getElementById("result").innerText = `🔥 CPU Benchmark Results:\n` +
-                `🔢 Integer Operations: ${integerScore} pts\n` +
-                `📊 Floating-Point Ops: ${floatScore} pts\n` +
-                `💾 Memory Performance: ${memoryScore} pts\n` +
-                `🔐 Encryption Speed: ${encryptionScore} pts\n` +
-                `📦 Compression Efficiency: ${compressionScore} pts\n` +
-                `🧵 Multi-Thread Performance: ${multiThreadScore} pts\n` +
-                `🎮 Real-World Simulation: ${realWorldScore} pts\n` +
-                `⏱ Time Taken: ${timeTaken} ms\n` +
-                `🖥 CPU: ${navigator.hardwareConcurrency} Cores`;
-        }
-    </script>
 </head>
 <body>
+    <div class="glow-effect"></div>
     <div class="container">
         <h1>🚀 Ultra Benchmark Pro X</h1>
         <p>Next-gen benchmarking that surpasses industry standards.</p>
         <button onclick="runBenchmark()">Start Benchmark</button>
         <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
-        <div class="spinner" id="spinner"></div>
-        <p class="loading" id="loading">Running benchmark...</p>
+        <p class="loading" id="loading">⚡ Running benchmark...</p>
         <p id="result">Waiting for test...</p>
     </div>
 </body>
