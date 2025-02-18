@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batman CPU Benchmark</title>
+    <title>Ultimate CPU Benchmark</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
         body {
-            font-family: 'Orbitron', sans-serif;
-            background: radial-gradient(circle, #000000, #1a1a1a);
-            color: #ffcc00;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #ffffff;
             text-align: center;
             padding: 50px;
             margin: 0;
@@ -18,10 +17,10 @@
         .container {
             max-width: 800px;
             margin: auto;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.8);
             padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 0 50px rgba(255, 204, 0, 0.8);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
             animation: fadeIn 1s ease-in-out;
         }
         @keyframes fadeIn {
@@ -29,108 +28,84 @@
             to { opacity: 1; transform: scale(1); }
         }
         h1 {
-            font-size: 50px;
+            font-size: 32px;
             text-transform: uppercase;
-            color: #ffcc00;
-            text-shadow: 0px 0px 20px rgba(255, 204, 0, 0.7);
+            background: -webkit-linear-gradient(90deg, #ff8c00, #ff2e63);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         p {
-            font-size: 22px;
+            font-size: 18px;
             margin-bottom: 20px;
-            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
         }
         button {
-            padding: 18px 40px;
-            font-size: 24px;
+            padding: 15px 35px;
+            font-size: 20px;
             font-weight: bold;
-            color: #000;
-            background: linear-gradient(90deg, #ffcc00, #ff9900);
+            color: #fff;
+            background: linear-gradient(90deg, #ff8c00, #ff2e63);
             border: none;
-            border-radius: 15px;
+            border-radius: 10px;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.5);
-            position: relative;
-            overflow: hidden;
         }
         button:hover {
-            background: linear-gradient(90deg, #ff9900, #ffcc00);
+            background: linear-gradient(90deg, #ff2e63, #ff8c00);
             transform: scale(1.1);
         }
         #result {
             margin-top: 20px;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
-            background: rgba(20, 20, 20, 0.9);
-            padding: 25px;
-            border-radius: 12px;
+            background: #21262d;
+            padding: 15px;
+            border-radius: 10px;
             display: inline-block;
-            box-shadow: 0 0 25px rgba(255, 204, 0, 0.4);
-            white-space: pre-line;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
         .progress {
             width: 100%;
-            background: rgba(30, 30, 30, 0.8);
-            border-radius: 12px;
+            background: #30363d;
+            border-radius: 10px;
             overflow: hidden;
             margin-top: 20px;
-            height: 30px;
-            position: relative;
+            height: 25px;
         }
         .progress-bar {
             width: 0;
             height: 100%;
-            background: linear-gradient(90deg, #ffcc00, #ff9900);
-            transition: width 3s ease-in-out;
-        }
-        .loading {
-            display: none;
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 15px;
-            animation: pulse 1.5s infinite;
-            color: #ffcc00;
-        }
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+            background: linear-gradient(90deg, #ff8c00, #ff2e63);
+            transition: width 2s ease-in-out;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>🦇 Batman Benchmark</h1>
-        <p>Test your CPU's power with the precision of the Dark Knight.</p>
+        <h1>🚀 Ultimate CPU Benchmark</h1>
+        <p>Test your CPU's real-world performance with an advanced benchmarking algorithm.</p>
         <button onclick="runBenchmark()">Start Benchmark</button>
         <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
-        <p class="loading" id="loading">🦇 Scanning Gotham's CPU...</p>
         <p id="result">Waiting for test...</p>
     </div>
+
     <script>
         function runBenchmark() {
-            document.getElementById("loading").style.display = "block";
-            document.getElementById("result").textContent = "Running test...";
-            document.getElementById("progressBar").style.width = "100%";
+            document.getElementById("result").innerText = "Running benchmark...";
+            let progressBar = document.getElementById("progressBar");
+            progressBar.style.width = "0%";
             
             setTimeout(() => {
-                document.getElementById("loading").textContent = "🚀 Boosting Batcomputer...";
-            }, 1500);
-            
-            setTimeout(() => {
-                document.getElementById("loading").textContent = "💥 Almost Done...";
-            }, 2500);
-            
-            const worker = new Worker("worker.js");
-            worker.onmessage = function(event) {
-                document.getElementById("loading").style.display = "none";
-                document.getElementById("progressBar").style.width = "0%";
-                document.getElementById("result").textContent = `✅ Benchmark Completed!
-Execution Time: ${event.data.time} ms
-Operations/ms: ${event.data.ops}
-CPU Cores Used: ${event.data.cores}`;
-            };
-            worker.postMessage({ iterations: 50000000 });
+                progressBar.style.width = "100%";
+                let start = performance.now(); 
+                let sum = 0;
+                for (let i = 1; i <= 100000000; i++) { 
+                    sum += Math.sin(i) * Math.sqrt(i) * Math.log(i + 1); 
+                } 
+                let end = performance.now();
+                let score = Math.round(50000000 / (end - start));
+                document.getElementById("result").innerText = `🔥 Benchmark Score: ${score} pts (Time Taken: ${(end - start).toFixed(2)} ms)`;
+            }, 1000);
         }
     </script>
 </body>
